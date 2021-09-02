@@ -5,9 +5,10 @@ import sys
 import re
 import subprocess
 import tempfile
-from datetime import datetime, timezone
 import hashlib
 import urllib.parse
+from datetime import datetime, timezone
+from pathlib import Path
 
 import semver
 import requests
@@ -344,6 +345,7 @@ def main():
 
     print("[INFO] Report Content : ", os.environ.get("REPORT_CONTENT"))
     if chart_source_exists or chart_tarball_exists:
+        Path('.cr-release-packages').mkdir(parents=True, exist_ok=True)
         if chart_source_exists:
             prepare_chart_source_for_release(category, organization, chart, version)
         if chart_tarball_exists:
